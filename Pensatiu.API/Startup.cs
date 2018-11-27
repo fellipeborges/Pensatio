@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pensatiu.Entities;
+using Pensatiu.Repository;
+using Pensatiu.Repository.Consultorios;
+using Pensatiu.Services;
 
 namespace Pensatiu.API
 {
@@ -24,20 +28,33 @@ namespace Pensatiu.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //Services
+            services.AddScoped<ConsultorioService>();
+
+            //In Memory Repositories
+            services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
+            
+            //Sql Repositories
+
+            //Other
+            services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+                              IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
             }
             else
             {
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            Pensatiu.Services.AutoMapper.AutoMapperConfiguration.Initialize();
             app.UseMvc();
         }
     }

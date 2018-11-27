@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Pensatiu.Entities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pensatiu.Repository.Consultorios
 {
-    interface IConsultorioData
+    public interface IConsultorioData
     {
+        Consultorio Get(int id);
+        Consultorio GetByNome(string nome);
+        IEnumerable<Consultorio> GetAll();
+        Consultorio Add(Consultorio item);
+        bool Update(Consultorio item);
+        bool Delete(Consultorio item);
+        bool Exists(int id);
     }
 }
