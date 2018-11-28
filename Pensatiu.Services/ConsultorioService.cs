@@ -33,11 +33,11 @@ namespace Pensatiu.Services
         }
         #endregion
 
-        #region Add
-        public ConsultorioDto Add(ConsultorioForCreateUpdateDto consultorioDto)
+        #region Create
+        public ConsultorioDto Create(ConsultorioForCreateUpdateDto consultorioDto)
         {
             CheckBeforeAdd(consultorioDto);
-            var newConsultorio = _consultorioData.Add(Mapper.Map<Consultorio>(consultorioDto));
+            var newConsultorio = _consultorioData.Create(Mapper.Map<Consultorio>(consultorioDto));
             return Mapper.Map<ConsultorioDto>(newConsultorio);
         }
         private void CheckBeforeAdd(ConsultorioForCreateUpdateDto consultorioDto)

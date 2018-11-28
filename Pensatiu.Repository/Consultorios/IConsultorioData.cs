@@ -8,7 +8,7 @@ namespace Pensatiu.Repository.Consultorios
         Consultorio Get(int id);
         Consultorio GetByNome(string nome);
         IEnumerable<Consultorio> GetAll();
-        Consultorio Add(Consultorio item);
+        Consultorio Create(Consultorio item);
         bool Update(Consultorio item);
         bool Delete(Consultorio item);
         bool Exists(int id);

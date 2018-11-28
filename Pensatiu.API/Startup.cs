@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -51,11 +52,24 @@ namespace Pensatiu.API
             else
             {
                 app.UseHsts();
+                app.UseExceptionHandler(GlobalErrorHandlerAppBuilder());
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            Pensatiu.Services.AutoMapper.AutoMapperConfiguration.Initialize();
+            Services.AutoMapper.AutoMapperConfiguration.Initialize();
             app.UseMvc();
+        }
+
+        private static Action<IApplicationBuilder> GlobalErrorHandlerAppBuilder()
+        {
+            return appBuilder =>
+            {
+                appBuilder.Run(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("Um erro inesperado ocorreu ao processar a solicitação.");
+                });
+            };
         }
     }
 }

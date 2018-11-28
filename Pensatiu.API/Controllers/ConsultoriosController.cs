@@ -51,14 +51,14 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            var newConsultorio = _consultorioService.Add(consultorio);
+            var newConsultorio = _consultorioService.Create(consultorio);
             return CreatedAtRoute("Get", new { id = newConsultorio.Id }, newConsultorio);
         }
 
         [HttpPut("Update/{id}")]
-        public ActionResult Update(int id, [FromBody] ConsultorioForCreateUpdateDto consultorio)
+        public ActionResult Update(int id, [FromBody] ConsultorioForCreateUpdateDto consultorioForCreateUpdateDto)
         {
-            if (id <= 0 || consultorio == null)
+            if (id <= 0 || consultorioForCreateUpdateDto == null)
             {
                 return BadRequest();
             }
@@ -66,7 +66,7 @@ namespace Pensatiu.API.Controllers
             {
                 return new NotFoundResult();
             }
-            var updated = _consultorioService.Update(id, consultorio);
+            var updated = _consultorioService.Update(id, consultorioForCreateUpdateDto);
             if (updated == false)
             {
                 return BadRequest();

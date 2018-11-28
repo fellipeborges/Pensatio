@@ -20,7 +20,7 @@ namespace Pensatiu.Repository.Consultorios
             };
         }
 
-        public Consultorio Add(Consultorio item)
+        public Consultorio Create(Consultorio item)
         {
             item.Id = _items.Max(r => r.Id) + 1;
             _items.Add(item);
