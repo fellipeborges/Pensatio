@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Pensatiu.Entities;
 using Pensatiu.Services.Dto.Consultorio;
+using Pensatiu.Services.Dto.Paciente;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Pensatiu.Services.AutoMapper
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile<ConsultorioProfile>();
+                cfg.AddProfile<PacienteProfile>();
             });
         }
     }
@@ -23,8 +25,22 @@ namespace Pensatiu.Services.AutoMapper
         public ConsultorioProfile()
         {
             CreateMap<Consultorio, ConsultorioDto>();
-            CreateMap<ConsultorioForCreateUpdateDto, Consultorio>();
-            CreateMap<Consultorio, ConsultorioForCreateUpdateDto>();
+            CreateMap<ConsultorioForCreateDto, Consultorio>();
+            CreateMap<ConsultorioForUpdateDto, Consultorio>();
+            CreateMap<Consultorio, ConsultorioForCreateDto>();
+            CreateMap<Consultorio, ConsultorioForUpdateDto>();
+        }
+    }
+
+    public class PacienteProfile: Profile
+    {
+        public PacienteProfile()
+        {
+            CreateMap<Paciente, PacienteDto>();
+            CreateMap<PacienteForCreateDto, Paciente>();
+            CreateMap<PacienteForUpdateDto, Paciente>();
+            CreateMap<Paciente, PacienteForCreateDto>();
+            CreateMap<Paciente, PacienteForUpdateDto>();
         }
     }
 }

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using Pensatiu.Services.Dto.Consultorio;
 using AutoMapper;
 using System;
+using Pensatiu.Services.Interfaces;
 
 namespace Pensatiu.Services
 {
-    public class ConsultorioService
+    public class ConsultorioService : IPensatiuService<ConsultorioDto, ConsultorioForCreateDto, ConsultorioForUpdateDto>
     {
         private IConsultorioData _consultorioData;
 
@@ -34,32 +35,32 @@ namespace Pensatiu.Services
         #endregion
 
         #region Create
-        public ConsultorioDto Create(ConsultorioForCreateUpdateDto consultorioDto)
+        public ConsultorioDto Create(ConsultorioForCreateDto consultorioForCreateDto)
         {
-            CheckBeforeAdd(consultorioDto);
-            var newConsultorio = _consultorioData.Create(Mapper.Map<Consultorio>(consultorioDto));
-            return Mapper.Map<ConsultorioDto>(newConsultorio);
+            CheckBeforeAdd(consultorioForCreateDto);
+            var newResource = _consultorioData.Create(Mapper.Map<Consultorio>(consultorioForCreateDto));
+            return Mapper.Map<ConsultorioDto>(newResource);
         }
-        private void CheckBeforeAdd(ConsultorioForCreateUpdateDto consultorioDto)
+        private void CheckBeforeAdd(ConsultorioForCreateDto consultorioForCreateDto)
         {
             //Verifica se já existe outro consultório com o mesmo nome
-            if (_consultorioData.GetByNome(consultorioDto.Nome) != null)
+            if (_consultorioData.GetByNome(consultorioForCreateDto.Nome) != null)
             {
-                throw new Exception($"Já existe um consultório com o nome '{consultorioDto.Nome}'.");
+                throw new Exception($"Já existe um consultório com o nome '{consultorioForCreateDto.Nome}'.");
             }
         }
 
         #endregion
 
         #region Update
-        public bool Update(int id, ConsultorioForCreateUpdateDto consultorioDto)
+        public bool Update(int id, ConsultorioForUpdateDto consultorioForUpdateDto)
         {
-            CheckBeforeUpdate(id, consultorioDto);
-            var resourceToUpdate = Mapper.Map<Consultorio>(consultorioDto);
+            CheckBeforeUpdate(id, consultorioForUpdateDto);
+            var resourceToUpdate = Mapper.Map<Consultorio>(consultorioForUpdateDto);
             resourceToUpdate.Id = id;
             return _consultorioData.Update(resourceToUpdate);
         }
-        private void CheckBeforeUpdate(int id, ConsultorioForCreateUpdateDto consultorioDto)
+        private void CheckBeforeUpdate(int id, ConsultorioForUpdateDto consultorioForUpdateDto)
         {
             //Verifica se o recurso existe
             if (_consultorioData.Exists(id) == false)
@@ -68,10 +69,10 @@ namespace Pensatiu.Services
             }
 
             //Verifica se já existe outro consultório com o mesmo nome
-            var con = _consultorioData.GetByNome(consultorioDto.Nome);
+            var con = _consultorioData.GetByNome(consultorioForUpdateDto.Nome);
             if (con != null && con.Id != id)
             {
-                throw new Exception($"Já existe um consultório com o nome '{consultorioDto.Nome}'.");
+                throw new Exception($"Já existe um consultório com o nome '{consultorioForUpdateDto.Nome}'.");
             }
         }
         #endregion

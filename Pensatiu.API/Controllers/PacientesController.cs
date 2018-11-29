@@ -1,26 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pensatiu.Services;
-using Pensatiu.Services.Dto.Consultorio;
-using System.Net;
+using Pensatiu.Services.Dto.Paciente;
+using Pensatiu.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pensatiu.API.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
-    public class ConsultoriosController : ControllerBase
+    public class PacientesController : ControllerBase
     {
-        private ConsultorioService _consultorioService;
+        private PacienteService _pacienteService;
 
-        public ConsultoriosController(ConsultorioService consultorioService)
+        public PacientesController(PacienteService pacienteService)
         {
-            _consultorioService = consultorioService;
+            _pacienteService = pacienteService;
         }
 
-        [HttpGet("{id}", Name = "GetConsultorio")]
+        [HttpGet("{id}", Name = "GetPaciente")]
         public ActionResult Get(int id)
         {
-            var item = _consultorioService.Get(id);
+            var item = _pacienteService.Get(id);
             if (item == null)
             {
                 return new NotFoundResult();
@@ -30,11 +33,11 @@ namespace Pensatiu.API.Controllers
                 return Ok(item);
             }
         }
-        
+
         [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
-            var items = _consultorioService.GetAll();
+            var items = _pacienteService.GetAll();
             if (items == null)
             {
                 return new NotFoundResult();
@@ -46,28 +49,28 @@ namespace Pensatiu.API.Controllers
         }
 
         [HttpPost("Create")]
-        public ActionResult Create([FromBody] ConsultorioForCreateDto consultorioForCreateDto)
+        public ActionResult Create([FromBody] PacienteForCreateDto pacienteForCreateDto)
         {
-            if (consultorioForCreateDto == null)
+            if (pacienteForCreateDto == null)
             {
                 return BadRequest();
             }
-            var newConsultorio = _consultorioService.Create(consultorioForCreateDto);
-            return CreatedAtRoute("GetConsultorio", new { id = newConsultorio.Id }, newConsultorio);
+            var newResource = _pacienteService.Create(pacienteForCreateDto);
+            return CreatedAtRoute("GetPaciente", new { id = newResource.Id }, newResource);
         }
 
         [HttpPut("Update/{id}")]
-        public ActionResult Update(int id, [FromBody] ConsultorioForUpdateDto consultorioForUpdateDto)
+        public ActionResult Update(int id, [FromBody] PacienteForUpdateDto pacienteForUpdateDto)
         {
-            if (id <= 0 || consultorioForUpdateDto == null)
+            if (id <= 0 || pacienteForUpdateDto == null)
             {
                 return BadRequest();
             }
-            if (_consultorioService.Exists(id) == false)
+            if (_pacienteService.Exists(id) == false)
             {
                 return new NotFoundResult();
             }
-            var updated = _consultorioService.Update(id, consultorioForUpdateDto);
+            var updated = _pacienteService.Update(id, pacienteForUpdateDto);
             if (updated == false)
             {
                 return BadRequest();
@@ -83,11 +86,11 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            if (_consultorioService.Exists(id) == false)
+            if (_pacienteService.Exists(id) == false)
             {
                 return new NotFoundResult();
             }
-            var deleted = _consultorioService.Delete(id);
+            var deleted = _pacienteService.Delete(id);
             if (deleted == false)
             {
                 return BadRequest();

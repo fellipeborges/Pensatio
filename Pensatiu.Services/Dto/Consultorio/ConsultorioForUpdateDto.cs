@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Pensatiu.Services.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Pensatiu.Services.Dto.Consultorio
 {
-    public class ConsultorioForCreateUpdateDto
+    public class ConsultorioForUpdateDto: IDto, IDtoForUpdate
     {
         public string Nome { get; set; }
         public string Cor { get; set; } = "#fff";
