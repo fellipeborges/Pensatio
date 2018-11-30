@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Pensatiu.Services.Dto.Paciente
 {
-    public class PacienteForUpdateDto : PacienteForManipulationDto, IDtoForUpdate
+    public abstract class PacienteForManipulationDto : IDto
     {
+        public string Nome { get; set; }
     }
 }
