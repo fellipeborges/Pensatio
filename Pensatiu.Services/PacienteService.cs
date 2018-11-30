@@ -18,6 +18,7 @@ namespace Pensatiu.Services
         }
 
         #region Get
+
         public PacienteDto Get(int id)
         {
             return Mapper.Map<PacienteDto>(_pacienteData.Get(id));
@@ -32,15 +33,18 @@ namespace Pensatiu.Services
         {
             return _pacienteData.Exists(id);
         }
-        #endregion
+
+        #endregion Get
 
         #region Create
+
         public PacienteDto Create(PacienteForCreateDto dtoForCreate)
         {
             CheckBeforeAdd(dtoForCreate);
             var newRecord = _pacienteData.Create(Mapper.Map<Paciente>(dtoForCreate));
             return Mapper.Map<PacienteDto>(newRecord);
         }
+
         private void CheckBeforeAdd(PacienteForCreateDto dtoForCreate)
         {
             //Verifica se já existe outro paciente com o mesmo nome
@@ -49,9 +53,11 @@ namespace Pensatiu.Services
                 throw new Exception($"Já existe um paciente com o nome '{dtoForCreate.Nome}'.");
             }
         }
-        #endregion
+
+        #endregion Create
 
         #region Update
+
         public bool Update(int id, PacienteForUpdateDto dtoForUpdate)
         {
             CheckBeforeUpdate(id, dtoForUpdate);
@@ -59,6 +65,7 @@ namespace Pensatiu.Services
             resourceToUpdate.Id = id;
             return _pacienteData.Update(resourceToUpdate);
         }
+
         private void CheckBeforeUpdate(int id, PacienteForUpdateDto dtoForUpdate)
         {
             //Verifica se o recurso existe
@@ -74,9 +81,11 @@ namespace Pensatiu.Services
                 throw new Exception($"Já existe um paciente com o nome '{dtoForUpdate.Nome}'.");
             }
         }
-        #endregion
+
+        #endregion Update
 
         #region Delete
+
         public bool Delete(int id)
         {
             CheckBeforeDelete(id);
@@ -93,6 +102,6 @@ namespace Pensatiu.Services
             }
         }
 
-        #endregion
+        #endregion Delete
     }
 }

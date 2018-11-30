@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pensatiu.Common
+﻿namespace Pensatiu.Common
 {
     public class UserContext
     {

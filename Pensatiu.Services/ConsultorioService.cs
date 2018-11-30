@@ -1,10 +1,10 @@
-﻿using Pensatiu.Repository.Consultorios;
+﻿using AutoMapper;
 using Pensatiu.Entities;
-using System.Collections.Generic;
+using Pensatiu.Repository.Consultorios;
 using Pensatiu.Services.Dto.Consultorio;
-using AutoMapper;
-using System;
 using Pensatiu.Services.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace Pensatiu.Services
 {
@@ -18,6 +18,7 @@ namespace Pensatiu.Services
         }
 
         #region Get
+
         public ConsultorioDto Get(int id)
         {
             return Mapper.Map<ConsultorioDto>(_consultorioData.Get(id));
@@ -32,15 +33,18 @@ namespace Pensatiu.Services
         {
             return _consultorioData.Exists(id);
         }
-        #endregion
+
+        #endregion Get
 
         #region Create
+
         public ConsultorioDto Create(ConsultorioForCreateDto consultorioForCreateDto)
         {
             CheckBeforeAdd(consultorioForCreateDto);
             var newResource = _consultorioData.Create(Mapper.Map<Consultorio>(consultorioForCreateDto));
             return Mapper.Map<ConsultorioDto>(newResource);
         }
+
         private void CheckBeforeAdd(ConsultorioForCreateDto consultorioForCreateDto)
         {
             //Verifica se já existe outro consultório com o mesmo nome
@@ -50,9 +54,10 @@ namespace Pensatiu.Services
             }
         }
 
-        #endregion
+        #endregion Create
 
         #region Update
+
         public bool Update(int id, ConsultorioForUpdateDto consultorioForUpdateDto)
         {
             CheckBeforeUpdate(id, consultorioForUpdateDto);
@@ -60,6 +65,7 @@ namespace Pensatiu.Services
             resourceToUpdate.Id = id;
             return _consultorioData.Update(resourceToUpdate);
         }
+
         private void CheckBeforeUpdate(int id, ConsultorioForUpdateDto consultorioForUpdateDto)
         {
             //Verifica se o recurso existe
@@ -75,9 +81,11 @@ namespace Pensatiu.Services
                 throw new Exception($"Já existe um consultório com o nome '{consultorioForUpdateDto.Nome}'.");
             }
         }
-        #endregion
+
+        #endregion Update
 
         #region Delete
+
         public bool Delete(int id)
         {
             CheckBeforeDelete(id);
@@ -93,6 +101,7 @@ namespace Pensatiu.Services
                 throw new Exception($"O recurso sendo excluído não existe na base.");
             }
         }
-        #endregion
+
+        #endregion Delete
     }
 }

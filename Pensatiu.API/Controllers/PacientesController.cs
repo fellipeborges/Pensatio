@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pensatiu.Services;
 using Pensatiu.Services.Dto.Paciente;
-using Pensatiu.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pensatiu.API.Controllers
 {
@@ -77,7 +72,6 @@ namespace Pensatiu.API.Controllers
             }
             return NoContent();
         }
-
 
         [HttpDelete("Delete/{id}")]
         public ActionResult Delete(int id)

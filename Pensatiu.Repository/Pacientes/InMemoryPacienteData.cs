@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Pensatiu.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Pensatiu.Entities;
 
 namespace Pensatiu.Repository.Pacientes
 {
@@ -36,6 +34,7 @@ namespace Pensatiu.Repository.Pacientes
         {
             return _items.FirstOrDefault(r => r.Id == id);
         }
+
         public Paciente GetByNome(string nome)
         {
             return _items.FirstOrDefault(r => r.Nome == nome);

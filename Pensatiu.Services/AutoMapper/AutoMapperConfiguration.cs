@@ -2,9 +2,6 @@
 using Pensatiu.Entities;
 using Pensatiu.Services.Dto.Consultorio;
 using Pensatiu.Services.Dto.Paciente;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pensatiu.Services.AutoMapper
 {
@@ -20,7 +17,7 @@ namespace Pensatiu.Services.AutoMapper
         }
     }
 
-    public class ConsultorioProfile: Profile
+    public class ConsultorioProfile : Profile
     {
         public ConsultorioProfile()
         {
@@ -32,7 +29,7 @@ namespace Pensatiu.Services.AutoMapper
         }
     }
 
-    public class PacienteProfile: Profile
+    public class PacienteProfile : Profile
     {
         public PacienteProfile()
         {

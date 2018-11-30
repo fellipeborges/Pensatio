@@ -1,0 +1,20 @@
+﻿Instalar o Nugget "Microsoft.EntityFrameworkCore.Tools"
+Abrir o Package Manager Console
+Assegurar que está na pasta "Pensatiu.Repository" (usando dir, cd, etc)
+
+==================================================================================================
+CRIAÇÃO INICIAL DA BASE DE DADOS
+==================================================================================================
+	dotnet ef --startup-project ../Pensatiu.API migrations add init 
+	dotnet ef --startup-project ../Pensatiu.API database update
+
+==================================================================================================
+MIGRAÇÕES POSTERIORES
+==================================================================================================
+	dotnet ef --startup-project ../Pensatiu.API migrations add name_of_migration
+	update-database -verbose
+
+==================================================================================================
+SCRIPT
+==================================================================================================
+	script-migration -idempotent

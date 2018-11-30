@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Pensatiu.Services.Interfaces
 {
@@ -10,10 +8,15 @@ namespace Pensatiu.Services.Interfaces
         where DtoForUpdate : class
     {
         DtoForGet Get(int id);
+
         IEnumerable<DtoForGet> GetAll();
+
         bool Exists(int id);
+
         DtoForGet Create(DtoForCreate dtoForCreate);
+
         bool Update(int id, DtoForUpdate dtoForUpdate);
+
         bool Delete(int id);
     }
 
@@ -25,9 +28,11 @@ namespace Pensatiu.Services.Interfaces
     {
         int Id { get; set; }
     }
+
     public interface IDtoForCreate
     {
     }
+
     public interface IDtoForUpdate
     {
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Pensatiu.Entities
 {
@@ -14,6 +11,7 @@ namespace Pensatiu.Entities
         public string Nome { get; set; }
 
         [Required]
+        [StringLength(7)]
         public string Cor { get; set; }
 
         [StringLength(150)]
@@ -22,21 +20,22 @@ namespace Pensatiu.Entities
         [StringLength(8)]
         public string CEP { get; set; }
 
-        [StringLength(8)]
+        [StringLength(100)]
         public string Cidade { get; set; }
-        
+
+        [StringLength(2)]
         public string UF { get; set; }
 
         [Required]
         public TipoConsultorioEnum Tipo { get; set; }
-        
-        public double ValorCustoMensal { get; set; }
 
-        public double ValorAluguelMensal { get; set; }
+        public double? ValorCustoMensal { get; set; }
 
-        public double ValorLocacaoHora { get; set; }
+        public double? ValorAluguelMensal { get; set; }
 
-        public double ValorLocomocao { get; set; }
+        public double? ValorLocacaoHora { get; set; }
+
+        public double? ValorLocomocao { get; set; }
     }
 
     public enum TipoConsultorioEnum

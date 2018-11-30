@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pensatiu.Services;
 using Pensatiu.Services.Dto.Consultorio;
-using System.Net;
 
 namespace Pensatiu.API.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     public class ConsultoriosController : ControllerBase
@@ -30,7 +28,7 @@ namespace Pensatiu.API.Controllers
                 return Ok(item);
             }
         }
-        
+
         [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
@@ -74,7 +72,6 @@ namespace Pensatiu.API.Controllers
             }
             return NoContent();
         }
-
 
         [HttpDelete("Delete/{id}")]
         public ActionResult Delete(int id)

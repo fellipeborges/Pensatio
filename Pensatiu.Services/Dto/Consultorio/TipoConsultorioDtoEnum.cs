@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Pensatiu.Services.Dto.Consultorio
 {
@@ -9,8 +6,10 @@ namespace Pensatiu.Services.Dto.Consultorio
     {
         [Display(Name = "Próprio")]
         Proprio = 1,
+
         [Display(Name = "Aluguel Mensal")]
         AluguelMensal = 2,
+
         [Display(Name = "Locação por Hora")]
         LocacaoPorHora = 3
     }

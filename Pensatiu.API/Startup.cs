@@ -24,16 +24,17 @@ namespace Pensatiu.API
             services.AddScoped<PacienteService>();
 
             //In Memory Repositories
-            services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
+            //services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
             services.AddSingleton<IPacienteData, InMemoryPacienterioData>();
 
             //Sql Repositories
+            services.AddSingleton<IConsultorioData, SqlConsultorioData>();
 
             //Other
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, 
+        public void Configure(IApplicationBuilder app,
                               IHostingEnvironment env)
         {
             if (env.IsDevelopment())

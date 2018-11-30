@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Pensatiu.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Pensatiu.Services.Interfaces;
 
 namespace Pensatiu.Services.Dto.Consultorio
 {
