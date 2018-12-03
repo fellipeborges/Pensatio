@@ -38,6 +38,16 @@ namespace Pensatiu.Services.AutoMapper
             CreateMap<PacienteForUpdateDto, Paciente>();
             CreateMap<Paciente, PacienteForCreateDto>();
             CreateMap<Paciente, PacienteForUpdateDto>();
+            
+            //Consultas recorrentes
+            CreateMap<PacienteConsultaRecorrente, PacienteConsultaRecorrenteDto>()
+                .ForMember(dest => dest.ConsultorioId, opt => opt.MapFrom(src => src.Consultorio.Id))
+                .ForMember(dest => dest.ConsultorioNome, opt => opt.MapFrom(src => src.Consultorio.Nome));
+            CreateMap<PacienteConsultaRecorrenteDto, PacienteConsultaRecorrente>();
+            CreateMap<PacienteConsultaRecorrenteForCreateDto, PacienteConsultaRecorrente>();
+            CreateMap<PacienteConsultaRecorrenteForUpdateDto, PacienteConsultaRecorrente>();
+            CreateMap<PacienteConsultaRecorrente, PacienteConsultaRecorrenteForCreateDto>();
+            CreateMap<PacienteConsultaRecorrente, PacienteConsultaRecorrenteForUpdateDto>();
         }
     }
 }

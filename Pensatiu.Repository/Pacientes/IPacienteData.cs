@@ -18,5 +18,12 @@ namespace Pensatiu.Repository.Pacientes
         bool Delete(Paciente item);
 
         bool Exists(int id);
+
+        PacienteConsultaRecorrente ConsultaRecorrenteGetById(int pacienteId, int id);
+        IEnumerable<PacienteConsultaRecorrente> ConsultaRecorrenteGetAll(int pacienteId);
+        PacienteConsultaRecorrente ConsultaRecorrenteCreate(int pacienteId, PacienteConsultaRecorrente item);
+        bool ConsultaRecorrenteUpdate(int pacienteId, PacienteConsultaRecorrente item);
+        bool ConsultaRecorrenteDelete(int pacienteId, PacienteConsultaRecorrente item);
+        bool ConsultaRecorrenteExists(int pacienteId, int id);
     }
 }

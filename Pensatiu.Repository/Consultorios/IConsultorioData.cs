@@ -11,11 +11,11 @@ namespace Pensatiu.Repository.Consultorios
 
         IEnumerable<Consultorio> GetAll();
 
-        Consultorio Create(Consultorio item);
+        Consultorio Create(Consultorio itemToCreate);
 
-        bool Update(Consultorio item);
+        bool Update(Consultorio itemToUpdate);
 
-        bool Delete(Consultorio item);
+        bool Delete(Consultorio itemToDelete);
 
         bool Exists(int id);
     }

@@ -91,5 +91,66 @@ namespace Pensatiu.API.Controllers
             }
             return NoContent();
         }
+
+        [HttpGet("{pacienteId}/ConsultasRecorrentes/{id}", Name = "ConsultaRecorrenteGetById")]
+        public ActionResult ConsultaRecorrenteGetById(int pacienteId, int id)
+        {
+            var item = _pacienteService.ConsultaRecorrenteGetById(pacienteId, id);
+            if (item == null)
+            {
+                return new NotFoundResult();
+            }
+            else
+            {
+                return Ok(item);
+            }
+        }
+
+        [HttpGet("{pacienteId}/ConsultasRecorrentes/GetAll")]
+        public ActionResult ConsultaRecorrenteGetAll(int pacienteId)
+        {
+            var items = _pacienteService.ConsultaRecorrenteGetAll(pacienteId);
+            if (items == null)
+            {
+                return new NotFoundResult();
+            }
+            else
+            {
+                return Ok(items);
+            }
+        }
+
+        [HttpPost("{pacienteId}/ConsultasRecorrentes/Create")]
+        public ActionResult ConsultaRecorrenteCreate(int pacienteId,
+            [FromBody] PacienteConsultaRecorrenteForCreateDto pacienteConsultaRecorrenteDto)
+        {
+            if (pacienteConsultaRecorrenteDto == null)
+            {
+                return BadRequest();
+            }
+            var newResource = _pacienteService.ConsultaRecorrenteCreate(pacienteId, pacienteConsultaRecorrenteDto);
+            return CreatedAtRoute("ConsultaRecorrenteGetById", new { pacienteId, id = newResource.Id }, newResource);
+        }
+
+        [HttpPut("{pacienteId}/ConsultasRecorrentes/Update/{id}")]
+        public ActionResult ConsultasRecorrentesUpdate(int pacienteId, int id,
+            [FromBody] PacienteConsultaRecorrenteForUpdateDto pacienteConsultaRecorrenteForUpdate)
+        {
+            if (pacienteId <= 0 || pacienteConsultaRecorrenteForUpdate == null)
+            {
+                return BadRequest();
+            }
+            if (_pacienteService.ConsultaRecorrenteExists(pacienteId, id) == false)
+            {
+                return new NotFoundResult();
+            }
+            var updated = _pacienteService.ConsultaRecorrenteUpdate(pacienteId, id, pacienteConsultaRecorrenteForUpdate);
+            if (updated == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
+
     }
 }

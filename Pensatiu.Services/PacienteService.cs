@@ -18,7 +18,6 @@ namespace Pensatiu.Services
         }
 
         #region Get
-
         public PacienteDto Get(int id)
         {
             return Mapper.Map<PacienteDto>(_pacienteData.Get(id));
@@ -37,15 +36,14 @@ namespace Pensatiu.Services
         #endregion Get
 
         #region Create
-
         public PacienteDto Create(PacienteForCreateDto dtoForCreate)
         {
-            CheckBeforeAdd(dtoForCreate);
+            CheckBeforeCreate(dtoForCreate);
             var newRecord = _pacienteData.Create(Mapper.Map<Paciente>(dtoForCreate));
             return Mapper.Map<PacienteDto>(newRecord);
         }
 
-        private void CheckBeforeAdd(PacienteForCreateDto dtoForCreate)
+        private void CheckBeforeCreate(PacienteForCreateDto dtoForCreate)
         {
             //Verifica se já existe outro paciente com o mesmo nome
             if (_pacienteData.GetByNome(dtoForCreate.Nome) != null)
@@ -57,7 +55,6 @@ namespace Pensatiu.Services
         #endregion Create
 
         #region Update
-
         public bool Update(int id, PacienteForUpdateDto dtoForUpdate)
         {
             CheckBeforeUpdate(id, dtoForUpdate);
@@ -103,5 +100,33 @@ namespace Pensatiu.Services
         }
 
         #endregion Delete
+
+        #region ConsultasRecorrentes
+        public bool ConsultaRecorrenteExists(int pacienteId, int id)
+        {
+            return _pacienteData.ConsultaRecorrenteExists(pacienteId, id);
+        }
+
+        public PacienteConsultaRecorrenteDto ConsultaRecorrenteGetById(int pacienteId, int id)
+        {
+            return Mapper.Map<PacienteConsultaRecorrenteDto>(_pacienteData.ConsultaRecorrenteGetById(pacienteId, id));
+        }
+
+        public IEnumerable<PacienteConsultaRecorrenteDto> ConsultaRecorrenteGetAll(int pacienteId)
+        {
+            return Mapper.Map<IEnumerable<PacienteConsultaRecorrenteDto>>(_pacienteData.ConsultaRecorrenteGetAll(pacienteId));
+        }
+        public PacienteConsultaRecorrenteDto ConsultaRecorrenteCreate(int pacienteId, PacienteConsultaRecorrenteForCreateDto dtoForCreate)
+        {
+            var newRecord = _pacienteData.ConsultaRecorrenteCreate(pacienteId, Mapper.Map<PacienteConsultaRecorrente>(dtoForCreate));
+            return Mapper.Map<PacienteConsultaRecorrenteDto>(newRecord);
+        }
+        public bool ConsultaRecorrenteUpdate(int pacienteId, int id, PacienteConsultaRecorrenteForUpdateDto dtoForUpdate)
+        {
+            var resourceToUpdate = Mapper.Map<PacienteConsultaRecorrente>(dtoForUpdate);
+            resourceToUpdate.Id = id;
+            return _pacienteData.ConsultaRecorrenteUpdate(pacienteId, resourceToUpdate);
+        }
+        #endregion
     }
 }

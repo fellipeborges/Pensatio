@@ -34,11 +34,11 @@ namespace Pensatiu.Entities
 
         public int? DiaCobranca { get; set; }
 
-        public List<ConsultaRecorrente> ConsultasRecorrentes { get; set; }
+        public List<PacienteConsultaRecorrente> PacienteConsultasRecorrentes { get; set; }
 
         public Paciente()
         {
-            ConsultasRecorrentes = new List<ConsultaRecorrente>();
+            PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>();
         }
     }
 

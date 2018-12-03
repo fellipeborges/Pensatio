@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pensatiu.Repository.Consultorios;
+using Pensatiu.Repository.Context;
 using Pensatiu.Repository.Pacientes;
 using Pensatiu.Services;
 
@@ -23,12 +25,20 @@ namespace Pensatiu.API
             services.AddScoped<ConsultorioService>();
             services.AddScoped<PacienteService>();
 
+            //DbContext
+            //services.AddTransient<PensatiuDbContext>();
+            services.AddDbContext<PensatiuDbContext>(options =>
+                //options.UseSqlServer(Configuration.GetConnectionString("BlexzWebConnection"))
+                options.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Initial Catalog = Pensatiu; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False;"),
+                ServiceLifetime.Scoped
+            );
+
             //In Memory Repositories
             //services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
             services.AddSingleton<IPacienteData, InMemoryPacienterioData>();
 
             //Sql Repositories
-            services.AddSingleton<IConsultorioData, SqlConsultorioData>();
+            services.AddScoped<IConsultorioData, SqlConsultorioData>();
 
             //Other
             services.AddMvc();

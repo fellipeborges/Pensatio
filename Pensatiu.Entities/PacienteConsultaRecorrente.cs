@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pensatiu.Entities
 {
-    public class ConsultaRecorrente
+    public class PacienteConsultaRecorrente
     {
+        public int Id { get; set; }
+
         public int PacienteId { get; set; }
         public Paciente Paciente { get; set; }
 
@@ -12,13 +14,13 @@ namespace Pensatiu.Entities
         public Consultorio Consultorio { get; set; }
 
         [Required]
-        public ConsultaRecorrenteDiaDaSemanaEnum DiaSemana { get; set; }
+        public PacienteConsultaRecorrenteDiaDaSemanaEnum DiaSemana { get; set; }
 
         [Required]
         public TimeSpan Hora { get; set; }
     }
 
-    public enum ConsultaRecorrenteDiaDaSemanaEnum
+    public enum PacienteConsultaRecorrenteDiaDaSemanaEnum
     {
         Domingo = 1,
         SegundaFeira = 2,
