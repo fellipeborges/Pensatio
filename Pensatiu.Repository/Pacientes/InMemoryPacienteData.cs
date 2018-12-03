@@ -164,7 +164,8 @@ namespace Pensatiu.Repository.Pacientes
 
         public bool ConsultaRecorrenteDelete(int pacienteId, PacienteConsultaRecorrente item)
         {
-            throw new NotImplementedException();
+            var paciente = Get(pacienteId);
+            return paciente.PacienteConsultasRecorrentes.Remove(item);
         }
 
         public bool ConsultaRecorrenteExists(int pacienteId, int id)

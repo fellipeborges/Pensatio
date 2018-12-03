@@ -82,7 +82,6 @@ namespace Pensatiu.Services
         #endregion Update
 
         #region Delete
-
         public bool Delete(int id)
         {
             CheckBeforeDelete(id);
@@ -126,6 +125,11 @@ namespace Pensatiu.Services
             var resourceToUpdate = Mapper.Map<PacienteConsultaRecorrente>(dtoForUpdate);
             resourceToUpdate.Id = id;
             return _pacienteData.ConsultaRecorrenteUpdate(pacienteId, resourceToUpdate);
+        }
+        public bool ConsultaRecorrenteDelete(int pacienteId, int id)
+        {
+            var resourceToDelete = Mapper.Map<PacienteConsultaRecorrente>(_pacienteData.ConsultaRecorrenteGetById(pacienteId, id));
+            return _pacienteData.ConsultaRecorrenteDelete(pacienteId, resourceToDelete);
         }
         #endregion
     }

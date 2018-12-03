@@ -124,7 +124,7 @@ namespace Pensatiu.API.Controllers
         public ActionResult ConsultaRecorrenteCreate(int pacienteId,
             [FromBody] PacienteConsultaRecorrenteForCreateDto pacienteConsultaRecorrenteDto)
         {
-            if (pacienteConsultaRecorrenteDto == null)
+            if (pacienteId <= 0 || pacienteConsultaRecorrenteDto == null)
             {
                 return BadRequest();
             }
@@ -136,7 +136,7 @@ namespace Pensatiu.API.Controllers
         public ActionResult ConsultasRecorrentesUpdate(int pacienteId, int id,
             [FromBody] PacienteConsultaRecorrenteForUpdateDto pacienteConsultaRecorrenteForUpdate)
         {
-            if (pacienteId <= 0 || pacienteConsultaRecorrenteForUpdate == null)
+            if (pacienteId <= 0 || id <= 0 || pacienteConsultaRecorrenteForUpdate == null)
             {
                 return BadRequest();
             }
@@ -146,6 +146,26 @@ namespace Pensatiu.API.Controllers
             }
             var updated = _pacienteService.ConsultaRecorrenteUpdate(pacienteId, id, pacienteConsultaRecorrenteForUpdate);
             if (updated == false)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
+
+
+        [HttpDelete("{pacienteId}/ConsultasRecorrentes/Delete/{id}")]
+        public ActionResult ConsultasRecorrentesDelete(int pacienteId, int id)
+        {
+            if (pacienteId <=0 || id <= 0)
+            {
+                return BadRequest();
+            }
+            if (_pacienteService.ConsultaRecorrenteExists(pacienteId, id) == false)
+            {
+                return new NotFoundResult();
+            }
+            var deleted = _pacienteService.ConsultaRecorrenteDelete(pacienteId, id);
+            if (deleted == false)
             {
                 return BadRequest();
             }
