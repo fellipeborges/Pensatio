@@ -10,8 +10,8 @@ using Pensatiu.Repository.Context;
 namespace Pensatiu.Repository.Migrations
 {
     [DbContext(typeof(PensatiuDbContext))]
-    [Migration("20181130231747_dataannotations")]
-    partial class dataannotations
+    [Migration("20181203233752_v2")]
+    partial class v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,23 +20,6 @@ namespace Pensatiu.Repository.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Pensatiu.Entities.ConsultaRecorrente", b =>
-                {
-                    b.Property<int>("PacienteId");
-
-                    b.Property<int>("ConsultorioId");
-
-                    b.Property<int>("DiaSemana");
-
-                    b.Property<TimeSpan>("Hora");
-
-                    b.HasKey("PacienteId", "ConsultorioId");
-
-                    b.HasIndex("ConsultorioId");
-
-                    b.ToTable("ConsultasRecorrentes");
-                });
 
             modelBuilder.Entity("Pensatiu.Entities.Consultorio", b =>
                 {
@@ -66,13 +49,13 @@ namespace Pensatiu.Repository.Migrations
                     b.Property<string>("UF")
                         .HasMaxLength(2);
 
-                    b.Property<double>("ValorAluguelMensal");
+                    b.Property<double?>("ValorAluguelMensal");
 
-                    b.Property<double>("ValorCustoMensal");
+                    b.Property<double?>("ValorCustoMensal");
 
-                    b.Property<double>("ValorLocacaoHora");
+                    b.Property<double?>("ValorLocacaoHora");
 
-                    b.Property<double>("ValorLocomocao");
+                    b.Property<double?>("ValorLocomocao");
 
                     b.HasKey("Id");
 
@@ -85,11 +68,11 @@ namespace Pensatiu.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DataInicioTratamento");
+                    b.Property<DateTime?>("DataInicioTratamento");
 
-                    b.Property<DateTime>("DataNascimento");
+                    b.Property<DateTime?>("DataNascimento");
 
-                    b.Property<int>("DiaCobranca");
+                    b.Property<int?>("DiaCobranca");
 
                     b.Property<int>("Genero");
 
@@ -113,7 +96,30 @@ namespace Pensatiu.Repository.Migrations
                     b.ToTable("Pacientes");
                 });
 
-            modelBuilder.Entity("Pensatiu.Entities.ConsultaRecorrente", b =>
+            modelBuilder.Entity("Pensatiu.Entities.PacienteConsultaRecorrente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ConsultorioId");
+
+                    b.Property<int>("DiaSemana");
+
+                    b.Property<TimeSpan>("Hora");
+
+                    b.Property<int>("PacienteId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultorioId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.ToTable("PacienteConsultasRecorrentes");
+                });
+
+            modelBuilder.Entity("Pensatiu.Entities.PacienteConsultaRecorrente", b =>
                 {
                     b.HasOne("Pensatiu.Entities.Consultorio", "Consultorio")
                         .WithMany()
@@ -121,7 +127,7 @@ namespace Pensatiu.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Pensatiu.Entities.Paciente", "Paciente")
-                        .WithMany("ConsultasRecorrentes")
+                        .WithMany("PacienteConsultasRecorrentes")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

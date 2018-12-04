@@ -11,7 +11,7 @@ namespace Pensatiu.Services.Dto.Consultorio
         public string CEP { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
-        public TipoConsultorioDtoEnum Tipo { get; set; }
+        public TipoConsultorioEnumDto Tipo { get; set; }
         public double ValorCustoMensal { get; set; }
         public double ValorAluguelMensal { get; set; }
         public double ValorLocacaoHora { get; set; }

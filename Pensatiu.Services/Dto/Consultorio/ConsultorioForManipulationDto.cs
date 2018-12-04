@@ -29,7 +29,8 @@ namespace Pensatiu.Services.Dto.Consultorio
         public string UF { get; set; }
 
         [Required(ErrorMessage = "O campo '{0}' não foi informado.")]
-        public TipoConsultorioDtoEnum Tipo { get; set; }
+        [EnumDataType(typeof(TipoConsultorioEnumDto), ErrorMessage = "O valor do campo '{0}' é inválido.")]
+        public TipoConsultorioEnumDto Tipo { get; set; }
 
         [Display(Name = "Valor do Custo Mensal")]
         [Range(0, 9999999, ErrorMessage = "O valor do campo '{0}' deve estar entre {1} e {2}.")]

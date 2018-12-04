@@ -2,7 +2,7 @@
 
 namespace Pensatiu.Services.Dto.Consultorio
 {
-    public enum TipoConsultorioDtoEnum
+    public enum TipoConsultorioEnumDto
     {
         [Display(Name = "Próprio")]
         Proprio = 1,

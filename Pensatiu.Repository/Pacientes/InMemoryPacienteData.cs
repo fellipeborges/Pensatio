@@ -16,7 +16,15 @@ namespace Pensatiu.Repository.Pacientes
                 new Paciente
                 {
                     Id = 1,
-                    Nome = "João da Silva",
+                    Nome = "João",
+                    Sobrenome = "da Silva",
+                    DataInicioTratamento = new DateTime(2018,1,1),
+                    DataNascimento = new DateTime(1986, 12, 5),
+                    Genero = PacienteGeneroEnum.Masculino,
+                    Telefone = "11 984840922",
+                    TipoCobranca = PacienteTipoCobrancaEnum.Mensal,
+                    ValorCobranca = 500.00,
+                    DiaCobranca = 20,
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
                 {
                     new PacienteConsultaRecorrente{
@@ -33,7 +41,13 @@ namespace Pensatiu.Repository.Pacientes
                 new Paciente
                 {
                     Id = 2,
-                    Nome = "Maria das Dores",
+                    Nome = "Maria",
+                    Sobrenome = " das Dores",
+                    DataInicioTratamento = new DateTime(2017,2,12),
+                    DataNascimento = new DateTime(1990, 1, 18),
+                    Genero = PacienteGeneroEnum.Feminino,
+                    TipoCobranca = PacienteTipoCobrancaEnum.PorConsulta,
+                    ValorCobranca = 80.00,
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
                 {
                     new PacienteConsultaRecorrente{
@@ -58,7 +72,11 @@ namespace Pensatiu.Repository.Pacientes
                 new Paciente
                 {
                     Id = 3,
-                    Nome = "Gustavo Mendes"
+                    Nome = "Gustavo",
+                    Sobrenome = "Mendes",
+                    Genero = PacienteGeneroEnum.Masculino,
+                    TipoCobranca = PacienteTipoCobrancaEnum.PorConsulta,
+                    ValorCobranca = 55.00
                 }
             };
         }
@@ -80,9 +98,9 @@ namespace Pensatiu.Repository.Pacientes
             return _items.FirstOrDefault(r => r.Id == id);
         }
 
-        public Paciente GetByNome(string nome)
+        public Paciente GetByNomeSobrenome(string nome, string sobrenome)
         {
-            return _items.FirstOrDefault(r => r.Nome == nome);
+            return _items.FirstOrDefault(r => r.Nome == nome && r.Sobrenome == sobrenome);
         }
 
         public IEnumerable<Paciente> GetAll()

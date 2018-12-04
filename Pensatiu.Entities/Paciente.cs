@@ -51,8 +51,7 @@ namespace Pensatiu.Entities
 
     public enum PacienteTipoCobrancaEnum
     {
-        NaoDefinido = 1,
-        PorConsulta = 2,
-        Mensal = 3
+        PorConsulta = 1,
+        Mensal = 2
     }
 }

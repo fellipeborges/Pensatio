@@ -7,7 +7,7 @@ namespace Pensatiu.Repository.Pacientes
     {
         Paciente Get(int id);
 
-        Paciente GetByNome(string nome);
+        Paciente GetByNomeSobrenome(string nome, string sobrenome);
 
         IEnumerable<Paciente> GetAll();
 

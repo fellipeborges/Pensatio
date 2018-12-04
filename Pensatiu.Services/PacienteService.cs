@@ -46,9 +46,9 @@ namespace Pensatiu.Services
         private void CheckBeforeCreate(PacienteForCreateDto dtoForCreate)
         {
             //Verifica se já existe outro paciente com o mesmo nome
-            if (_pacienteData.GetByNome(dtoForCreate.Nome) != null)
+            if (_pacienteData.GetByNomeSobrenome(dtoForCreate.Nome, dtoForCreate.Sobrenome) != null)
             {
-                throw new Exception($"Já existe um paciente com o nome '{dtoForCreate.Nome}'.");
+                throw new Exception($"Já existe um paciente com o nome completo '{dtoForCreate.Nome} {dtoForCreate.Sobrenome}'.");
             }
         }
 
@@ -71,11 +71,11 @@ namespace Pensatiu.Services
                 throw new Exception($"O recurso sendo alterado não existe na base.");
             }
 
-            //Verifica se já existe outro paciente com o mesmo nome
-            var con = _pacienteData.GetByNome(dtoForUpdate.Nome);
+            //Verifica se já existe outro paciente com o mesmo nome/sobrenome
+            var con = _pacienteData.GetByNomeSobrenome(dtoForUpdate.Nome, dtoForUpdate.Sobrenome);
             if (con != null && con.Id != id)
             {
-                throw new Exception($"Já existe um paciente com o nome '{dtoForUpdate.Nome}'.");
+                throw new Exception($"Já existe um paciente com o nome completo '{dtoForUpdate.Nome} {dtoForUpdate.Sobrenome}'.");
             }
         }
 
