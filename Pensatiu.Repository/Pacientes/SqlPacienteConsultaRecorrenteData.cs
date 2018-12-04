@@ -19,19 +19,10 @@ namespace Pensatiu.Repository.Pacientes
 
         public PacienteConsultaRecorrente Create(int pacienteId, PacienteConsultaRecorrente itemToCreate)
         {
+            itemToCreate.PacienteId = pacienteId;
             _dbContext.PacienteConsultasRecorrentes.Add(itemToCreate);
             _dbContext.SaveChanges();
             return itemToCreate;
-            //var paciente = Get(pacienteId);
-            //paciente.PacienteConsultasRecorrentes.Add(item);
-            //if (Update(paciente) == true)
-            //{
-            //    return item;
-            //}
-            //else
-            //{
-            //    return null;
-            //}
         }
 
         public bool Delete(PacienteConsultaRecorrente item)

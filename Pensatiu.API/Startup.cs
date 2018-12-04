@@ -24,6 +24,7 @@ namespace Pensatiu.API
             //Services
             services.AddScoped<ConsultorioService>();
             services.AddScoped<PacienteService>();
+            services.AddScoped<PacienteConsultaRecorrenteService>();
 
             //DbContext
             //services.AddTransient<PensatiuDbContext>();
