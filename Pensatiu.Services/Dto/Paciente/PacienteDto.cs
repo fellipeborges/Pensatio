@@ -8,7 +8,6 @@ namespace Pensatiu.Services.Dto.Paciente
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
-
         public string NomeCompleto { get
             {
                 return $"{this.Nome} {this.Sobrenome}";

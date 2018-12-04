@@ -35,10 +35,12 @@ namespace Pensatiu.API
 
             //In Memory Repositories
             //services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
-            services.AddSingleton<IPacienteData, InMemoryPacienterioData>();
+            //services.AddSingleton<IPacienteData, InMemoryPacienterioData>();
 
             //Sql Repositories
             services.AddScoped<IConsultorioData, SqlConsultorioData>();
+            services.AddScoped<IPacienteData, SqlPacienteData>();
+            services.AddScoped<IPacienteConsultaRecorrenteData, SqlPacienteConsultaRecorrenteData>();
 
             //Other
             services.AddMvc();

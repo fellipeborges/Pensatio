@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Pensatiu.Repository.Pacientes
 {
-    public class InMemoryPacienterioData : IPacienteData
+    public class InMemoryPacienterioData //: IPacienteData
     {
         private List<Paciente> _items;
 

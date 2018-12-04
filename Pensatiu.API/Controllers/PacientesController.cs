@@ -9,10 +9,12 @@ namespace Pensatiu.API.Controllers
     public class PacientesController : ControllerBase
     {
         private PacienteService _pacienteService;
+        private PacienteConsultaRecorrenteService _pacienteConsultaRecorrenteService;
 
-        public PacientesController(PacienteService pacienteService)
+        public PacientesController(PacienteService pacienteService, PacienteConsultaRecorrenteService pacienteConsultaRecorrenteService)
         {
             _pacienteService = pacienteService;
+            _pacienteConsultaRecorrenteService = pacienteConsultaRecorrenteService;
         }
 
         [HttpGet("{id}", Name = "GetPaciente")]
@@ -95,7 +97,11 @@ namespace Pensatiu.API.Controllers
         [HttpGet("{pacienteId}/ConsultasRecorrentes/{id}", Name = "ConsultaRecorrenteGetById")]
         public ActionResult ConsultaRecorrenteGetById(int pacienteId, int id)
         {
-            var item = _pacienteService.ConsultaRecorrenteGetById(pacienteId, id);
+            if (_pacienteService.Exists(pacienteId) == false)
+            {
+                return new NotFoundResult();
+            }
+            var item = _pacienteConsultaRecorrenteService.Get(id);
             if (item == null)
             {
                 return new NotFoundResult();
@@ -109,7 +115,7 @@ namespace Pensatiu.API.Controllers
         [HttpGet("{pacienteId}/ConsultasRecorrentes/GetAll")]
         public ActionResult ConsultaRecorrenteGetAll(int pacienteId)
         {
-            var items = _pacienteService.ConsultaRecorrenteGetAll(pacienteId);
+            var items = _pacienteConsultaRecorrenteService.GetAll(pacienteId);
             if (items == null)
             {
                 return new NotFoundResult();
@@ -128,7 +134,7 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            var newResource = _pacienteService.ConsultaRecorrenteCreate(pacienteId, pacienteConsultaRecorrenteDto);
+            var newResource = _pacienteConsultaRecorrenteService.CreateWithParent(pacienteId, pacienteConsultaRecorrenteDto);
             return CreatedAtRoute("ConsultaRecorrenteGetById", new { pacienteId, id = newResource.Id }, newResource);
         }
 
@@ -140,11 +146,15 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            if (_pacienteService.ConsultaRecorrenteExists(pacienteId, id) == false)
+            if (_pacienteService.Exists(pacienteId) == false)
             {
                 return new NotFoundResult();
             }
-            var updated = _pacienteService.ConsultaRecorrenteUpdate(pacienteId, id, pacienteConsultaRecorrenteForUpdate);
+            if (_pacienteConsultaRecorrenteService.Exists(id) == false)
+            {
+                return new NotFoundResult();
+            }
+            var updated = _pacienteConsultaRecorrenteService.Update(id, pacienteConsultaRecorrenteForUpdate);
             if (updated == false)
             {
                 return BadRequest();
@@ -160,11 +170,15 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            if (_pacienteService.ConsultaRecorrenteExists(pacienteId, id) == false)
+            if (_pacienteService.Exists(pacienteId) == false)
             {
                 return new NotFoundResult();
             }
-            var deleted = _pacienteService.ConsultaRecorrenteDelete(pacienteId, id);
+            if (_pacienteConsultaRecorrenteService.Exists(id) == false)
+            {
+                return new NotFoundResult();
+            }
+            var deleted = _pacienteConsultaRecorrenteService.Delete(id);
             if (deleted == false)
             {
                 return BadRequest();

@@ -54,7 +54,6 @@ namespace Pensatiu.Repository.Consultorios
         {
             var item = Get(itemToUpdate.Id);
             _dbContext.Entry(item).CurrentValues.SetValues(itemToUpdate);
-            //_dbContext.Consultorios.Update(item);
             _dbContext.SaveChanges();
             return true;
         }

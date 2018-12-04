@@ -15,6 +15,8 @@ namespace Pensatiu.Services.Interfaces
 
         DtoForGet Create(DtoForCreate dtoForCreate);
 
+        DtoForGet CreateWithParent(int parentId, DtoForCreate dtoForCreate);
+
         bool Update(int id, DtoForUpdate dtoForUpdate);
 
         bool Delete(int id);
