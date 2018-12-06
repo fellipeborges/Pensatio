@@ -102,11 +102,6 @@ namespace Pensatiu.Services
             }
         }
 
-        public ConsultorioDto CreateWithParent(int parentId, ConsultorioForCreateDto dtoForCreate)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion Delete
     }
 }

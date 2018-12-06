@@ -134,7 +134,8 @@ namespace Pensatiu.API.Controllers
             {
                 return BadRequest();
             }
-            var newResource = _pacienteConsultaRecorrenteService.CreateWithParent(pacienteId, pacienteConsultaRecorrenteDto);
+            pacienteConsultaRecorrenteDto.ParentId = pacienteId;
+            var newResource = _pacienteConsultaRecorrenteService.Create(pacienteConsultaRecorrenteDto);
             return CreatedAtRoute("ConsultaRecorrenteGetById", new { pacienteId, id = newResource.Id }, newResource);
         }
 

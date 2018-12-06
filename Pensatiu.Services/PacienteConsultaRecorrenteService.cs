@@ -40,12 +40,7 @@ namespace Pensatiu.Services
 
         public PacienteConsultaRecorrenteDto Create(PacienteConsultaRecorrenteForCreateDto dtoForCreate)
         {
-            throw new NotImplementedException();
-        }
-
-        public PacienteConsultaRecorrenteDto CreateWithParent(int pacienteId, PacienteConsultaRecorrenteForCreateDto dtoForCreate)
-        {
-            var newRecord = _pacienteConsultaRecorrenteData.Create(pacienteId, Mapper.Map<PacienteConsultaRecorrente>(dtoForCreate));
+            var newRecord = _pacienteConsultaRecorrenteData.Create(dtoForCreate.ParentId, Mapper.Map<PacienteConsultaRecorrente>(dtoForCreate));
             return Mapper.Map<PacienteConsultaRecorrenteDto>(newRecord);
         }
 

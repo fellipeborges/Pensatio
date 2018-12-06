@@ -87,9 +87,5 @@ namespace Pensatiu.Services
                 throw new Exception($"O recurso sendo excluído não existe na base.");
             }
         }
-        public PacienteDto CreateWithParent(int parentId, PacienteForCreateDto dtoForCreate)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

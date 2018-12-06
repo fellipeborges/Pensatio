@@ -7,5 +7,6 @@ namespace Pensatiu.Services.Dto.Paciente
 {
     public class PacienteConsultaRecorrenteForCreateDto : PacienteConsultaRecorrenteForManipulationDto, IDtoForCreate
     {
+        public int ParentId { get; set; }
     }
 }
