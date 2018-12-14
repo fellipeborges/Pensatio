@@ -8,8 +8,8 @@ namespace Pensatiu.API.Controllers
     [ApiController]
     public class PacientesController : ControllerBase
     {
-        private PacienteService _pacienteService;
-        private PacienteConsultaRecorrenteService _pacienteConsultaRecorrenteService;
+        private readonly PacienteService _pacienteService;
+        private readonly PacienteConsultaRecorrenteService _pacienteConsultaRecorrenteService;
 
         public PacientesController(PacienteService pacienteService, PacienteConsultaRecorrenteService pacienteConsultaRecorrenteService)
         {

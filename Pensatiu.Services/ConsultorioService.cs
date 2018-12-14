@@ -10,7 +10,7 @@ namespace Pensatiu.Services
 {
     public class ConsultorioService : IPensatiuService<ConsultorioDto, ConsultorioForCreateDto, ConsultorioForUpdateDto>
     {
-        private IConsultorioData _consultorioData;
+        private readonly IConsultorioData _consultorioData;
 
         public ConsultorioService(IConsultorioData consultorioData)
         {

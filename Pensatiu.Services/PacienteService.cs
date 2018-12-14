@@ -10,7 +10,7 @@ namespace Pensatiu.Services
 {
     public class PacienteService : IPensatiuService<PacienteDto, PacienteForCreateDto, PacienteForUpdateDto>
     {
-        private IPacienteData _pacienteData;
+        private readonly IPacienteData _pacienteData;
 
         public PacienteService(IPacienteData pacienteData)
         {

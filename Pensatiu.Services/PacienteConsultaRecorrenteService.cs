@@ -11,7 +11,7 @@ namespace Pensatiu.Services
 {
     public class PacienteConsultaRecorrenteService : IPensatiuService<PacienteConsultaRecorrenteDto, PacienteConsultaRecorrenteForCreateDto, PacienteConsultaRecorrenteForUpdateDto>
     {
-        private IPacienteConsultaRecorrenteData _pacienteConsultaRecorrenteData;
+        private readonly IPacienteConsultaRecorrenteData _pacienteConsultaRecorrenteData;
 
         public PacienteConsultaRecorrenteService(IPacienteConsultaRecorrenteData pacienteConsultaRecorrenteData)
         {
