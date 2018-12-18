@@ -10,8 +10,8 @@ using Pensatiu.Repository.Context;
 namespace Pensatiu.Repository.Migrations
 {
     [DbContext(typeof(PensatiuDbContext))]
-    [Migration("20181203233752_v2")]
-    partial class v2
+    [Migration("20181218175352_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

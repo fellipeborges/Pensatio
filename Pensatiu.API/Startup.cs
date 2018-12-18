@@ -27,10 +27,8 @@ namespace Pensatiu.API
             services.AddScoped<PacienteConsultaRecorrenteService>();
 
             //DbContext
-            //services.AddTransient<PensatiuDbContext>();
             services.AddDbContext<PensatiuDbContext>(options =>
-                //options.UseSqlServer(Configuration.GetConnectionString("BlexzWebConnection"))
-                options.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Initial Catalog = Pensatiu; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False;"),
+                options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")),
                 ServiceLifetime.Scoped
             );
 

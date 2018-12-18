@@ -1,6 +1,7 @@
 ﻿Instalar o Nugget "Microsoft.EntityFrameworkCore.Tools"
 Abrir o Package Manager Console
 Assegurar que está na pasta "Pensatiu.Repository" (usando dir, cd, etc)
+cd .\Pensatiu.Repository
 
 ==================================================================================================
 CRIAÇÃO INICIAL DA BASE DE DADOS
