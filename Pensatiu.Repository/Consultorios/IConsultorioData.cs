@@ -1,4 +1,5 @@
 ﻿using Pensatiu.Entities;
+using Pensatiu.Repository.Context;
 using System.Collections.Generic;
 
 namespace Pensatiu.Repository.Consultorios

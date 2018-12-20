@@ -31,7 +31,6 @@ namespace Pensatiu.Repository.Context
             if (optionsBuilder.IsConfigured == false)
             {
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("PensatiuConnection"));
-                //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Initial Catalog=Pensatiu; Integrated Security=True; Connect Timeout=30; Encrypt=False; TrustServerCertificate=False;");
             }
         }
     }
