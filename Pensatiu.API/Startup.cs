@@ -27,10 +27,12 @@ namespace Pensatiu.API
             services.AddScoped<PacienteConsultaRecorrenteService>();
 
             //DbContext
-            services.AddDbContext<PensatiuDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")),
-                ServiceLifetime.Scoped
-            );
+            //services.AddDbContext<PensatiuDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")),
+            //    ServiceLifetime.Scoped
+            //);
+            //services.AddDbContext<PensatiuDbContext>(ServiceLifetime.Scoped);
+            services.AddScoped<PensatiuDbContext>();
 
             //In Memory Repositories
             //services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
