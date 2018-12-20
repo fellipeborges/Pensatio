@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\Src</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Migrations\20181130224213_init.cs" />
     <Compile Remove="Migrations\20181130224213_init.Designer.cs" />
