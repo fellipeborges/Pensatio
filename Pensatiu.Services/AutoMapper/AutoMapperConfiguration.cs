@@ -2,6 +2,7 @@
 using Pensatiu.Entities;
 using Pensatiu.Services.Dto.Consultorio;
 using Pensatiu.Services.Dto.Paciente;
+using System;
 
 namespace Pensatiu.Services.AutoMapper
 {
@@ -9,11 +10,33 @@ namespace Pensatiu.Services.AutoMapper
     {
         public static void Initialize()
         {
-            Mapper.Initialize(cfg =>
+            if (!IsInitialized())
             {
-                cfg.AddProfile<ConsultorioProfile>();
-                cfg.AddProfile<PacienteProfile>();
-            });
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.AddProfile<ConsultorioProfile>();
+                    cfg.AddProfile<PacienteProfile>();
+                });
+            }
+            //Mapper = new Mapper(
+            //    new MapperConfiguration(cfg =>
+            //{
+            //    cfg.AddProfile<ConsultorioProfile>();
+            //    cfg.AddProfile<PacienteProfile>();
+            //});
+        }
+
+        private static bool IsInitialized()
+        {
+            try
+            {
+                Mapper.Configuration.AssertConfigurationIsValid();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 
@@ -38,7 +61,7 @@ namespace Pensatiu.Services.AutoMapper
             CreateMap<PacienteForUpdateDto, Paciente>();
             CreateMap<Paciente, PacienteForCreateDto>();
             CreateMap<Paciente, PacienteForUpdateDto>();
-            
+
             //Consultas recorrentes
             CreateMap<PacienteConsultaRecorrente, PacienteConsultaRecorrenteDto>()
                 .ForMember(dest => dest.ConsultorioId, opt => opt.MapFrom(src => src.Consultorio.Id))

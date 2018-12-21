@@ -10,32 +10,35 @@ using System.Collections.Generic;
 
 namespace Pensatiu.Test
 {
-    public class PacienteTest
+    public class PacienteTest : IClassFixture<StartupFixture>
     {
-        PacientesController _controller;
         private const int ID_FOR_GET = 1;
         private const int ID_FOR_UPDATE = 2;
         private const int ID_FOR_DELETE = 3;
 
-        public PacienteTest()
+        private PacientesController GetNewControllerInstance()
         {
-            var objectSqlData = new SqlPacienteData(UnitTestHelpers.GetInMemoryDbContext());
-            var objectService = new PacienteService(objectSqlData);
-            _controller = new PacientesController(objectService, null);
+            var dbContext = UnitTestHelpers.GetNewInMemoryDbContextInstance();
+            var sqlData = new SqlPacienteData(dbContext);
+            var service = new PacienteService(sqlData);
+            return new PacientesController(service, null);
         }
 
         [Fact]
         public void Get_WithError()
         {
+            var controller = GetNewControllerInstance();
+
             //not found
-            var notFoundResult = _controller.Get(int.MaxValue);
+            var notFoundResult = controller.Get(int.MaxValue);
             Assert.IsType<NotFoundResult>(notFoundResult);
         }
 
         [Fact]
         public void Get_Ok()
         {
-            var okResult = _controller.Get(ID_FOR_GET) as OkObjectResult;
+            var controller = GetNewControllerInstance();
+            var okResult = controller.Get(ID_FOR_GET) as OkObjectResult;
             Assert.IsType<OkObjectResult>(okResult);
             Assert.IsType<PacienteDto>(okResult.Value);
             Assert.Equal(ID_FOR_GET, (okResult.Value as PacienteDto).Id);
@@ -44,7 +47,8 @@ namespace Pensatiu.Test
         [Fact]
         public void GetAll_Ok()
         {
-            var okResult = _controller.GetAll() as OkObjectResult;
+            var controller = GetNewControllerInstance();
+            var okResult = controller.GetAll() as OkObjectResult;
             Assert.IsType<OkObjectResult>(okResult);
             Assert.IsAssignableFrom<IEnumerable<PacienteDto>>(okResult.Value);
             Assert.True((okResult.Value as IEnumerable<PacienteDto>).Where(x => x.Id > 0).Count() > 0);
@@ -53,15 +57,17 @@ namespace Pensatiu.Test
         [Fact]
         public void Create_WithError()
         {
-            var badRequestResponse = _controller.Create(null);
+            var controller = GetNewControllerInstance();
+            var badRequestResponse = controller.Create(null);
             Assert.IsType<BadRequestResult>(badRequestResponse);
         }
         
         [Fact]
         public void Create_Ok()
         {
+            var controller = GetNewControllerInstance();
             var resourceToCreate = new PacienteForCreateDto { Nome = $"Novo { DateTime.UtcNow.ToString() }" };
-            var createdResponse = _controller.Create(resourceToCreate) as CreatedAtRouteResult;
+            var createdResponse = controller.Create(resourceToCreate) as CreatedAtRouteResult;
             var createdResource = createdResponse.Value as PacienteDto;
             Assert.IsType<CreatedAtRouteResult>(createdResponse);
             Assert.True(createdResource.Id > 0);

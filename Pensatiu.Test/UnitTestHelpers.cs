@@ -9,42 +9,56 @@ namespace Pensatiu.Test
 {
     static class UnitTestHelpers
     {
-        private static ServiceProvider _serviceProvider;
-        private static PensatiuDbContext _dbContext;
-        private static bool _isMapperInitialized;
+        
 
-        private static ServiceProvider GetServiceProvider()
+        //private static ServiceProvider GetServiceProvider()
+        //{
+        //    if (_serviceProvider == null)
+        //    {
+        //        if (!_isMapperInitialized)
+        //        {
+        //            Services.AutoMapper.AutoMapperConfiguration.Initialize();
+        //            _isMapperInitialized = true;
+        //        }
+
+        //        var services = new ServiceCollection();
+        //        services.AddDbContext<PensatiuDbContext>(options =>
+        //            options.UseInMemoryDatabase(Guid.NewGuid().ToString()),
+        //            ServiceLifetime.Singleton
+        //        );
+        //        _serviceProvider = services.BuildServiceProvider();
+        //    }
+        //    return _serviceProvider;
+        //}
+
+        //public static PensatiuDbContext GetInMemoryDbContext()
+        //{
+        //    _serviceProvider = GetServiceProvider();
+        //    if (_dbContext == null)
+        //    {
+        //        _dbContext = _serviceProvider.GetService<PensatiuDbContext>();
+        //        using (var loader = new SeedDataLoader(_dbContext))
+        //        {
+        //            loader.Load();
+        //        }
+        //    }
+        //    return _dbContext;
+        //}
+
+        public static PensatiuDbContext GetNewInMemoryDbContextInstance()
         {
-            if (_serviceProvider == null)
+            var services = new ServiceCollection();
+            services.AddDbContext<PensatiuDbContext>(options =>
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString()),
+                ServiceLifetime.Singleton
+            );
+            var serviceProvider = services.BuildServiceProvider();
+            var dbContext = serviceProvider.GetService<PensatiuDbContext>();
+            using (var loader = new SeedDataLoader(dbContext))
             {
-                if (!_isMapperInitialized)
-                {
-                    Services.AutoMapper.AutoMapperConfiguration.Initialize();
-                    _isMapperInitialized = true;
-                }
-
-                var services = new ServiceCollection();
-                services.AddDbContext<PensatiuDbContext>(options =>
-                    options.UseInMemoryDatabase(Guid.NewGuid().ToString()),
-                    ServiceLifetime.Singleton
-                );
-                _serviceProvider = services.BuildServiceProvider();
+                loader.Load();
             }
-            return _serviceProvider;
-        }
-
-        public static PensatiuDbContext GetInMemoryDbContext()
-        {
-            _serviceProvider = GetServiceProvider();
-            if (_dbContext == null)
-            {
-                _dbContext = _serviceProvider.GetService<PensatiuDbContext>();
-                using (var loader = new SeedDataLoader(_dbContext))
-                {
-                    loader.Load();
-                }
-            }
-            return _dbContext;
+            return dbContext;
         }
     }
 }
