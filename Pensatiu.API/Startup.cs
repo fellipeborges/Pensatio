@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pensatiu.Entities;
 using Pensatiu.Repository.Consultorios;
 using Pensatiu.Repository.Context;
 using Pensatiu.Repository.Pacientes;
 using Pensatiu.Services;
+using System;
+using System.Collections.Generic;
 
 namespace Pensatiu.API
 {
@@ -19,6 +22,15 @@ namespace Pensatiu.API
 
         public IConfiguration Configuration { get; }
 
+        private bool UseInMemoryDatabase
+        {
+            get
+            {
+                bool.TryParse(Configuration["UseInMemoryDatabase"], out bool useInMemoryDatabase);
+                return useInMemoryDatabase;
+            }
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             //Services
@@ -27,16 +39,14 @@ namespace Pensatiu.API
             services.AddScoped<PacienteConsultaRecorrenteService>();
 
             //DbContext
-            //services.AddDbContext<PensatiuDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")),
-            //    ServiceLifetime.Scoped
-            //);
-            //services.AddDbContext<PensatiuDbContext>(ServiceLifetime.Scoped);
-            services.AddScoped<PensatiuDbContext>();
-
-            //In Memory Repositories
-            //services.AddSingleton<IConsultorioData, InMemoryConsultorioData>();
-            //services.AddSingleton<IPacienteData, InMemoryPacienterioData>();
+            if (UseInMemoryDatabase)
+            {
+                services.AddDbContext<PensatiuDbContext>(opt => opt.UseInMemoryDatabase("PensatiuInMemoryDatabase"), ServiceLifetime.Singleton);
+            }
+            else
+            {
+                services.AddDbContext<PensatiuDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")));
+            }
 
             //Sql Repositories
             services.AddScoped<IConsultorioData, SqlConsultorioData>();
@@ -58,8 +68,8 @@ namespace Pensatiu.API
             else
             {
                 app.UseHsts();
-                //app.UseExceptionHandler(GlobalErrorHandlerAppBuilder());
             }
+            LoadSeedDataIfInMemoryDatabase(app);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             Services.AutoMapper.AutoMapperConfiguration.Initialize();
@@ -67,17 +77,16 @@ namespace Pensatiu.API
             app.UseMvc();
         }
 
-        //private static Action<IApplicationBuilder> GlobalErrorHandlerAppBuilder()
-        //{
-        //    return appBuilder =>
-        //    {
-        //        appBuilder.Run(async context =>
-        //        {
-        //            context.Response.ContentType = "application/json";
-        //            context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-        //            await context.Response.WriteAsync("Um erro inesperado ocorreu ao processar a solicitação.");
-        //        });
-        //    };
-        //}
+        private void LoadSeedDataIfInMemoryDatabase(IApplicationBuilder app)
+        {
+            if (UseInMemoryDatabase)
+            {
+                var createdDbContext = app.ApplicationServices.GetService<PensatiuDbContext>();
+                using (var loader = new SeedDataLoader(createdDbContext))
+                {
+                    loader.Load();
+                }
+            }
+        }
     }
 }

@@ -1,34 +1,29 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Pensatiu.Entities;
-using Pensatiu.Repository.Context;
+﻿using Pensatiu.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
-namespace Pensatiu.Test.Util
+namespace Pensatiu.Repository.Context
 {
-    static class InMemoryDbContextHelper
+    public class SeedDataLoader: IDisposable
     {
-        private static ServiceProvider _serviceProvider;
-        private static PensatiuDbContext _dbContext;
+        private PensatiuDbContext _dbContext;
 
-        public static PensatiuDbContext GetInMemoryDbContext()
+        public SeedDataLoader(PensatiuDbContext pensatiuDbContext)
         {
-            if (_serviceProvider == null)
-            {
-                _serviceProvider = ServiceProviderHelper.GetServiceProvider();
-            }
-            if (_dbContext == null)
-            {
-                _dbContext = _serviceProvider.GetService<PensatiuDbContext>();
-                LoadData_Consultorios();
-                LoadData_Pacientes();
-            }
-
-            return _dbContext;
+            _dbContext = pensatiuDbContext;
         }
 
-        private static void LoadData_Consultorios()
+        public void Dispose()
+        {}
+
+        public void Load()
+        {
+            LoadConsultorios();
+            LoadPacientes();
+        }
+
+        private void LoadConsultorios()
         {
             var items = new List<Consultorio>
             {
@@ -40,13 +35,12 @@ namespace Pensatiu.Test.Util
             _dbContext.SaveChanges();
         }
 
-        private static void LoadData_Pacientes()
+        private void LoadPacientes()
         {
             var items = new List<Paciente>
             {
                 new Paciente
                 {
-                    Id = 1,
                     Nome = "João",
                     Sobrenome = "da Silva",
                     DataInicioTratamento = new DateTime(2018,1,1),
@@ -59,7 +53,6 @@ namespace Pensatiu.Test.Util
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
                     {
                         new PacienteConsultaRecorrente{
-                            Id = 1,
                             PacienteId = 1,
                             Hora = new TimeSpan(14, 30, 0),
                             DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuartaFeira,
@@ -71,7 +64,6 @@ namespace Pensatiu.Test.Util
 
                 new Paciente
                 {
-                    Id = 2,
                     Nome = "Maria",
                     Sobrenome = " das Dores",
                     DataInicioTratamento = new DateTime(2017,2,12),
@@ -82,7 +74,6 @@ namespace Pensatiu.Test.Util
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
                     {
                         new PacienteConsultaRecorrente{
-                            Id = 2,
                             PacienteId = 2,
                             Hora = new TimeSpan(08, 30, 0),
                             DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.Sabado,
@@ -90,7 +81,6 @@ namespace Pensatiu.Test.Util
                             Consultorio = new Consultorio{Id = 2, Nome = "Mooca"},
                         },
                         new PacienteConsultaRecorrente{
-                            Id = 3,
                             PacienteId = 2,
                             Hora = new TimeSpan(18, 30, 0),
                             DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuintaFeira,
@@ -102,7 +92,6 @@ namespace Pensatiu.Test.Util
 
                 new Paciente
                 {
-                    Id = 3,
                     Nome = "Gustavo",
                     Sobrenome = "Mendes",
                     Genero = PacienteGeneroEnum.Masculino,

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pensatiu.API.Controllers;
-using Pensatiu.Repository.Consultorios;
+using Pensatiu.Repository.Pacientes;
 using Pensatiu.Services;
-using Pensatiu.Services.Dto.Consultorio;
+using Pensatiu.Services.Dto.Paciente;
 using System;
 using System.Linq;
 using Xunit;
@@ -10,18 +10,18 @@ using System.Collections.Generic;
 
 namespace Pensatiu.Test
 {
-    public class ConsultorioTest
+    public class PacienteTest
     {
-        ConsultoriosController _controller;
+        PacientesController _controller;
         private const int ID_FOR_GET = 1;
         private const int ID_FOR_UPDATE = 2;
         private const int ID_FOR_DELETE = 3;
 
-        public ConsultorioTest()
+        public PacienteTest()
         {
-            var objectSqlData = new SqlConsultorioData(UnitTestHelpers.GetInMemoryDbContext());
-            var objectService = new ConsultorioService(objectSqlData);
-            _controller = new ConsultoriosController(objectService);
+            var objectSqlData = new SqlPacienteData(UnitTestHelpers.GetInMemoryDbContext());
+            var objectService = new PacienteService(objectSqlData);
+            _controller = new PacientesController(objectService, null);
         }
 
         [Fact]
@@ -37,8 +37,8 @@ namespace Pensatiu.Test
         {
             var okResult = _controller.Get(ID_FOR_GET) as OkObjectResult;
             Assert.IsType<OkObjectResult>(okResult);
-            Assert.IsType<ConsultorioDto>(okResult.Value);
-            Assert.Equal(ID_FOR_GET, (okResult.Value as ConsultorioDto).Id);
+            Assert.IsType<PacienteDto>(okResult.Value);
+            Assert.Equal(ID_FOR_GET, (okResult.Value as PacienteDto).Id);
         }
 
         [Fact]
@@ -46,10 +46,9 @@ namespace Pensatiu.Test
         {
             var okResult = _controller.GetAll() as OkObjectResult;
             Assert.IsType<OkObjectResult>(okResult);
-            Assert.IsAssignableFrom<IEnumerable<ConsultorioDto>>(okResult.Value);
-            Assert.True((okResult.Value as IEnumerable<ConsultorioDto>).Where(x => x.Id > 0).Count() > 0);
+            Assert.IsAssignableFrom<IEnumerable<PacienteDto>>(okResult.Value);
+            Assert.True((okResult.Value as IEnumerable<PacienteDto>).Where(x => x.Id > 0).Count() > 0);
         }
-
 
         [Fact]
         public void Create_WithError()
@@ -57,22 +56,22 @@ namespace Pensatiu.Test
             var badRequestResponse = _controller.Create(null);
             Assert.IsType<BadRequestResult>(badRequestResponse);
         }
-
+        
         [Fact]
         public void Create_Ok()
         {
-            var resourceToCreate = new ConsultorioForCreateDto { Nome = $"Novo { DateTime.UtcNow.ToString() }" };
+            var resourceToCreate = new PacienteForCreateDto { Nome = $"Novo { DateTime.UtcNow.ToString() }" };
             var createdResponse = _controller.Create(resourceToCreate) as CreatedAtRouteResult;
-            var createdResource = createdResponse.Value as ConsultorioDto;
+            var createdResource = createdResponse.Value as PacienteDto;
             Assert.IsType<CreatedAtRouteResult>(createdResponse);
             Assert.True(createdResource.Id > 0);
             Assert.Equal(createdResource.Nome, resourceToCreate.Nome);
         }
-
+        /*
         [Fact]
         public void Update_Ok()
         {
-            var resourceToUpdate = new ConsultorioForUpdateDto { Nome = $"Alterado { DateTime.UtcNow.ToString() }" };
+            var resourceToUpdate = new ConsultorioForUpdateDto($"Alterado { DateTime.UtcNow.ToString() }", "#DADADA", TipoConsultorioEnumDto.AluguelMensal);
             var createdResponse = _controller.Update(ID_FOR_UPDATE, resourceToUpdate);
             Assert.IsType<NoContentResult>(createdResponse);
         }
@@ -80,7 +79,7 @@ namespace Pensatiu.Test
         [Fact]
         public void Update_WithError()
         {
-            var resourceToUpdate = new ConsultorioForUpdateDto { Nome = $"Alterado { DateTime.UtcNow.ToString() }" };
+            var resourceToUpdate = new ConsultorioForUpdateDto($"Alterado { DateTime.UtcNow.ToString() }", "#DADADA", TipoConsultorioEnumDto.AluguelMensal);
 
             //not found
             var notFoundResult = _controller.Update(int.MaxValue, resourceToUpdate);
@@ -115,5 +114,6 @@ namespace Pensatiu.Test
             var notFoundResult = _controller.Get(ID_FOR_DELETE); //Try to find
             Assert.IsType<NotFoundResult>(notFoundResult);
         }
+       */
     }
 }
