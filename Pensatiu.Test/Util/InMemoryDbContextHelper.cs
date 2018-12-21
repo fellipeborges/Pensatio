@@ -3,7 +3,7 @@ using Pensatiu.Entities;
 using Pensatiu.Repository.Context;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Pensatiu.Test.Util
 {
@@ -57,16 +57,16 @@ namespace Pensatiu.Test.Util
                     ValorCobranca = 500.00,
                     DiaCobranca = 20,
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
-                {
-                    new PacienteConsultaRecorrente{
-                        Id = 1,
-                        PacienteId = 1,
-                        Hora = new TimeSpan(14, 30, 0),
-                        DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuartaFeira,
-                        ConsultorioId = 1,
-                        Consultorio = new Consultorio{Id = 1, Nome = "Tatuapé"}
+                    {
+                        new PacienteConsultaRecorrente{
+                            Id = 1,
+                            PacienteId = 1,
+                            Hora = new TimeSpan(14, 30, 0),
+                            DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuartaFeira,
+                            ConsultorioId = 1,
+                            Consultorio = new Consultorio{Id = 1, Nome = "Tatuapé"}
+                        }
                     }
-                }
                 },
 
                 new Paciente
@@ -80,24 +80,24 @@ namespace Pensatiu.Test.Util
                     TipoCobranca = PacienteTipoCobrancaEnum.PorConsulta,
                     ValorCobranca = 80.00,
                     PacienteConsultasRecorrentes = new List<PacienteConsultaRecorrente>
-                {
-                    new PacienteConsultaRecorrente{
-                        Id = 2,
-                        PacienteId = 2,
-                        Hora = new TimeSpan(08, 30, 0),
-                        DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.Sabado,
-                        ConsultorioId = 2,
-                        Consultorio = new Consultorio{Id = 2, Nome = "Mooca"},
-                    },
-                    new PacienteConsultaRecorrente{
-                        Id = 3,
-                        PacienteId = 2,
-                        Hora = new TimeSpan(18, 30, 0),
-                        DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuintaFeira,
-                        ConsultorioId = 2,
-                        Consultorio = new Consultorio{Id = 2, Nome = "Mooca"}
+                    {
+                        new PacienteConsultaRecorrente{
+                            Id = 2,
+                            PacienteId = 2,
+                            Hora = new TimeSpan(08, 30, 0),
+                            DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.Sabado,
+                            ConsultorioId = 2,
+                            Consultorio = new Consultorio{Id = 2, Nome = "Mooca"},
+                        },
+                        new PacienteConsultaRecorrente{
+                            Id = 3,
+                            PacienteId = 2,
+                            Hora = new TimeSpan(18, 30, 0),
+                            DiaSemana = PacienteConsultaRecorrenteDiaDaSemanaEnum.QuintaFeira,
+                            ConsultorioId = 2,
+                            Consultorio = new Consultorio{Id = 2, Nome = "Mooca"}
+                        }
                     }
-                }
                 },
 
                 new Paciente

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pensatiu.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Pensatiu.Repository.Context
 {
@@ -17,8 +19,8 @@ namespace Pensatiu.Repository.Context
             _configuration = configuration;
         }
         public PensatiuDbContext(DbContextOptions options)
-            :base(options)
-        {}
+            : base(options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +29,7 @@ namespace Pensatiu.Repository.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Se não vier configurado o optionsBuilder, usa por padrão a base de dados real
+            //O optionsBuilder vem configurado quando se está rodando testes unitários com o EF Core InMemory
             if (optionsBuilder.IsConfigured == false)
             {
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("PensatiuConnection"));
