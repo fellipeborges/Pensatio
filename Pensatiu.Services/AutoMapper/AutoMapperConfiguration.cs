@@ -10,33 +10,11 @@ namespace Pensatiu.Services.AutoMapper
     {
         public static void Initialize()
         {
-            if (!IsInitialized())
+            Mapper.Initialize(cfg =>
             {
-                Mapper.Initialize(cfg =>
-                {
-                    cfg.AddProfile<ConsultorioProfile>();
-                    cfg.AddProfile<PacienteProfile>();
-                });
-            }
-            //Mapper = new Mapper(
-            //    new MapperConfiguration(cfg =>
-            //{
-            //    cfg.AddProfile<ConsultorioProfile>();
-            //    cfg.AddProfile<PacienteProfile>();
-            //});
-        }
-
-        private static bool IsInitialized()
-        {
-            try
-            {
-                Mapper.Configuration.AssertConfigurationIsValid();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                cfg.AddProfile<ConsultorioProfile>();
+                cfg.AddProfile<PacienteProfile>();
+            });
         }
     }
 
