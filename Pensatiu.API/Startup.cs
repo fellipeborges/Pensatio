@@ -46,6 +46,7 @@ namespace Pensatiu.API
             else
             {
                 services.AddDbContext<PensatiuDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PensatiuConnection")));
+                services.BuildServiceProvider().GetService<PensatiuDbContext>().Database.Migrate(); // Automatically perform database migration
             }
 
             //Sql Repositories
